@@ -1,16 +1,16 @@
 #!/usr/bin/env python
-"""
-"""
+""" My work ;)))
+Dedicated to my lovely wife"""
 
 __author__ = 'Sergey Lutskovsky'
 __contact__ = 'sergius.lutskovsky@gmail.com'
 
 import sys
 import atexit
-import importlib
+import RPi.GPIO as GPIO
 from datetime import *
 
-if(sys.version_info[0]<3):
+if sys.version_info[0]<3:
     from Tkinter import *
 else:
     from tkinter import *
