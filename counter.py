@@ -17,8 +17,6 @@ else:
 
 from config import *
 
-totalfile = 'total'
-
 def change_value(name, index, mode):
     val = value.get()
 
@@ -52,13 +50,17 @@ def log(message):
     logfile.write(line)
 
 try:
-    with open(totalfile) as total:
+    with open('total') as total:
         initial = total.readline()
         initial = int(initial)
 except (IOError, ValueError):
     initial = 0
 finally:
-    total = open(totalfile, 'w+', 0)
+    total = open('total', 'w+', 0)
+
+for pin in enter_pins:
+    GPIO.add_event_detect(pin, GPIO.RISING, callback=enter())
+
 
 root=Tk()
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
