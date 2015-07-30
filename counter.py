@@ -15,18 +15,23 @@ if(sys.version_info[0]<3):
 else:
     from tkinter import *
 
-import config
+from config import *
 
 totalfile = 'total'
 
 def change_value(name, index, mode):
     val = value.get()
 
-    if val > config.limit:
-        label.config(fg='black', bg='red')
+    if val > limit:
+        label.config(fg='black', background='red')
+        root.config(background='red')
     else:
-        label.config(fg='white', bg='black')
+        label.config(fg='white', background='black')
+        root.config(background='black')
+
+    total.seek(0)
     total.write(str(val))
+    total.truncate()
 
 
 def enter():
@@ -46,38 +51,42 @@ def log(message):
     line = '{};{}\n'.format(time, message)
     logfile.write(line)
 
-
 try:
     with open(totalfile) as total:
         initial = total.readline()
         initial = int(initial)
-except IOError, ValueError:
+except (IOError, ValueError):
     initial = 0
 finally:
     total = open(totalfile, 'w+', 0)
 
 root=Tk()
+w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+root.overrideredirect(1)
+root.geometry("%dx%d+0+0" % (w, h))
 
 value = IntVar()
 value.trace('w', change_value)
-label = Label(root, textvariable=value)
-label.pack()
+label = Label(root, font=("Helvetica", fontsize), textvariable=value)
+label.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 value.set(initial)
 
 today = date.today().isoformat()
 logfile = open(today + '.log', 'a+', 0)
 
-in_1=Button(root,text='in 1', command=enter)
+buttons_window = Toplevel()
+
+in_1=Button(buttons_window,text='in 1', command=enter)
 in_1.pack()
 
-in_2=Button(root,text='in 2', command=enter)
+in_2=Button(buttons_window,text='in 2', command=enter)
 in_2.pack()
 
-out_1=Button(root,text='out 1', command=exit)
+out_1=Button(buttons_window,text='out 1', command=exit)
 out_1.pack()
 
-reset=Button(root,text='reset', command=reset)
+reset=Button(buttons_window,text='reset', command=reset)
 reset.pack()
 
 root.mainloop()
