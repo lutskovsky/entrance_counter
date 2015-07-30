@@ -8,53 +8,76 @@ __contact__ = 'sergius.lutskovsky@gmail.com'
 import sys
 import atexit
 import importlib
+from datetime import *
 
 if(sys.version_info[0]<3):
     from Tkinter import *
 else:
     from tkinter import *
 
-class Counter:
-    def __init__(self, config):
-        self.config = importlib.import_module(config)
+import config
 
-        root=Tk()
+totalfile = 'total'
 
-        self.value = IntVar()
-        self.value.trace('w', self.change_value)
-        self.label = Label(root, textvariable=self.value)
-        self.label.pack()
+def change_value(name, index, mode):
+    val = value.get()
 
-        self.value.set(0)
+    if val > config.limit:
+        label.config(fg='black', bg='red')
+    else:
+        label.config(fg='white', bg='black')
+    total.write(str(val))
 
 
-        in_1=Button(root,text='in 1', command=self.enter)
-        in_1.pack()
+def enter():
+    value.set(value.get() + 1)
+    log('in')
 
-        out_1=Button(root,text='out 1', command=self.exit)
-        out_1.pack()
+def exit():
+    value.set(value.get() - 1)
+    log('out')
 
-        reset=Button(root,text='reset', command=self.reset)
-        reset.pack()
+def reset():
+    value.set(0)
+    log('reset')
 
-        root.mainloop()
+def log(message):
+    time = datetime.now().isoformat(' ')
+    line = '{};{}\n'.format(time, message)
+    logfile.write(line)
 
-    def change_value(self, name, index, mode):
-        if self.value.get() < 0:
-            self.value.set(0)
 
-        if self.value.get() > self.config.limit:
-            self.label.config(fg='black', bg='red')
-        else:
-            self.label.config(fg='white', bg='black')
+try:
+    with open(totalfile) as total:
+        initial = total.readline()
+        initial = int(initial)
+except IOError, ValueError:
+    initial = 0
+finally:
+    total = open(totalfile, 'w+', 0)
 
-    def enter(self):
-        self.value.set(self.value.get() + 1)
+root=Tk()
 
-    def exit(self):
-        self.value.set(self.value.get() - 1)
+value = IntVar()
+value.trace('w', change_value)
+label = Label(root, textvariable=value)
+label.pack()
 
-    def reset(self):
-        self.value.set(0)
+value.set(initial)
 
-counter = Counter('config')
+today = date.today().isoformat()
+logfile = open(today + '.log', 'a+', 0)
+
+in_1=Button(root,text='in 1', command=enter)
+in_1.pack()
+
+in_2=Button(root,text='in 2', command=enter)
+in_2.pack()
+
+out_1=Button(root,text='out 1', command=exit)
+out_1.pack()
+
+reset=Button(root,text='reset', command=reset)
+reset.pack()
+
+root.mainloop()
