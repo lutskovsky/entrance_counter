@@ -6,6 +6,7 @@ __author__ = 'Sergey Lutskovsky'
 __contact__ = 'sergius.lutskovsky@gmail.com'
 
 import sys
+import os
 import atexit
 import RPi.GPIO as GPIO
 from datetime import *
@@ -91,6 +92,8 @@ label.place(relx=0.5, rely=0.5, anchor=CENTER)
 value.set(initial)
 
 today = date.today().isoformat()
-logfile = open(today + '.log', 'a+', 0)
+logfile_name = today + '.log'
+logfile_name = os.path.join(log_dir, logfile_name)
+logfile = open(logfile_name, 'a+', 0)
 
 root.mainloop()
