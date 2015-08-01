@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-""" """
+""" Script for RPi-based entrance counter.
+ Configuration file is ./config.py """
 
 __author__ = 'Sergey Lutskovsky'
 __contact__ = 'sergius.lutskovsky@gmail.com'
