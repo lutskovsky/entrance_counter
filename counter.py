@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-""" My work ;)))
-Dedicated to my lovely wife"""
+""" """
 
 __author__ = 'Sergey Lutskovsky'
 __contact__ = 'sergius.lutskovsky@gmail.com'
