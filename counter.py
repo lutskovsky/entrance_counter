@@ -80,7 +80,7 @@ for settings in pins:
 
 root = Tk()
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-root.overrideredirect(1)
+root.overrideredirect(fullscreen)
 root.geometry("%dx%d+0+0" % (w, h))
 
 value = IntVar()

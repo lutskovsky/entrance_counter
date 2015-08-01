@@ -3,6 +3,7 @@ __author__ = 'sergey'
 limit = 5
 fontsize = 500
 log_dir = '.'
+fullscreen = False
 
 default_bouncetime = 200
 
