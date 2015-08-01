@@ -10,18 +10,20 @@ import atexit
 import RPi.GPIO as GPIO
 from datetime import *
 
-if sys.version_info[0]<3:
+if sys.version_info[0] < 3:
     from Tkinter import *
 else:
     from tkinter import *
 
 from config import *
 
+
 @atexit.register
 def cleanup():
     GPIO.cleanup()
 
-def change_value(name, index, mode):
+
+def change_value(*not_used_args):
     val = value.get()
 
     if val > limit:
@@ -36,22 +38,26 @@ def change_value(name, index, mode):
     total.truncate()
 
 
-def increase():
+def increase(not_used_arg):
     value.set(value.get() + 1)
     log('in')
 
-def decrease():
+
+def decrease(not_used_arg):
     value.set(value.get() - 1)
     log('out')
 
-def reset():
+
+def reset(not_used_arg):
     value.set(0)
     log('reset')
 
+
 def log(message):
-    time = datetime.now().isoformat(' ')
-    line = '{};{}\n'.format(time, message)
+    cur_time = datetime.now().isoformat(' ')
+    line = '{};{}\n'.format(cur_time, message)
     logfile.write(line)
+
 
 def setup_pins(pin, callback, debounce=default_debounce):
     GPIO.setup(pin, GPIO.IN)
@@ -66,12 +72,10 @@ except (IOError, ValueError):
 finally:
     total = open('total', 'w+', 0)
 
+for settings in pins:
+    setup_pins(*settings)
 
-
-for setting in pins:
-    setup_pins(*setting)
-
-root=Tk()
+root = Tk()
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.overrideredirect(1)
 root.geometry("%dx%d+0+0" % (w, h))
@@ -85,7 +89,5 @@ value.set(initial)
 
 today = date.today().isoformat()
 logfile = open(today + '.log', 'a+', 0)
-
-
 
 root.mainloop()
