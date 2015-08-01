@@ -73,7 +73,7 @@ except (IOError, ValueError):
 finally:
     total = open('total', 'w+', 0)
 
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(numbering_mode)
 
 for settings in pins:
     setup_pins(*settings)
