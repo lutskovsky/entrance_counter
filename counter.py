@@ -54,7 +54,7 @@ def reset(not_used_arg):
 
 
 def log(message):
-    cur_time = datetime.now().isoformat(' ')
+    cur_time = datetime.now().replace(microsecond=0).isoformat(' ')
     line = '{};{}\n'.format(cur_time, message)
     logfile.write(line)
 
