@@ -32,11 +32,11 @@ def change_value(name, index, mode):
     total.truncate()
 
 
-def enter():
+def increase():
     value.set(value.get() + 1)
     log('in')
 
-def exit():
+def decrease():
     value.set(value.get() - 1)
     log('out')
 
@@ -49,6 +49,10 @@ def log(message):
     line = '{};{}\n'.format(time, message)
     logfile.write(line)
 
+def setup_pins(pin, callback, debounce=default_debounce):
+    GPIO.setup(pin, GPIO.IN)
+    GPIO.add_event_detect(pin, GPIO.RISING, callback=callback, debounce=debounce)
+
 try:
     with open('total') as total:
         initial = total.readline()
@@ -58,9 +62,10 @@ except (IOError, ValueError):
 finally:
     total = open('total', 'w+', 0)
 
-#for pin in enter_pins:
-#    GPIO.add_event_detect(pin, GPIO.RISING, callback=enter())
 
+
+for setting in pins:
+    setup_pins(*setting)
 
 root=Tk()
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -77,18 +82,6 @@ value.set(initial)
 today = date.today().isoformat()
 logfile = open(today + '.log', 'a+', 0)
 
-buttons_window = Toplevel()
 
-in_1=Button(buttons_window,text='in 1', command=enter)
-in_1.pack()
-
-in_2=Button(buttons_window,text='in 2', command=enter)
-in_2.pack()
-
-out_1=Button(buttons_window,text='out 1', command=exit)
-out_1.pack()
-
-reset=Button(buttons_window,text='reset', command=reset)
-reset.pack()
 
 root.mainloop()

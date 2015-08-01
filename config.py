@@ -2,8 +2,12 @@ __author__ = 'sergey'
 
 limit = 5
 fontsize = 500
-log_dir='.'
+log_dir = '.'
 
-enter_pins=(1,2)
-exit_pins=(3,4)
-reset_pins=(5,6)
+default_debounce = 200
+
+pins = (
+    (23, increase, 300),
+    (16, decrease),
+    (25, reset)
+)
