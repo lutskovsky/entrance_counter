@@ -59,10 +59,10 @@ def log(message):
     logfile.write(line)
 
 
-def setup_pins(pin, callback, debounce=default_debounce):
+def setup_pins(pin, callback, bouncetime=default_bouncetime):
     GPIO.setup(pin, GPIO.IN)
     callback_func = globals()[callback]
-    GPIO.add_event_detect(pin, GPIO.RISING, callback=callback_func, debounce=debounce)
+    GPIO.add_event_detect(pin, GPIO.RISING, callback=callback_func, bouncetime=bouncetime)
 
 try:
     with open('total') as total:

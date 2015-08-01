@@ -4,7 +4,7 @@ limit = 5
 fontsize = 500
 log_dir = '.'
 
-default_debounce = 200
+default_bouncetime = 200
 
 pins = (
     (23, 'increase', 300),
