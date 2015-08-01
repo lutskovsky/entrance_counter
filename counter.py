@@ -17,6 +17,10 @@ else:
 
 from config import *
 
+@atexit.register
+def cleanup():
+    GPIO.cleanup()
+
 def change_value(name, index, mode):
     val = value.get()
 
