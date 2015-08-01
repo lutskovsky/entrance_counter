@@ -60,7 +60,7 @@ def log(message):
 
 
 def setup_pins(pin, callback, bouncetime=default_bouncetime):
-    GPIO.setup(pin, GPIO.IN)
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     callback_func = globals()[callback]
     GPIO.add_event_detect(pin, GPIO.RISING, callback=callback_func, bouncetime=bouncetime)
 
