@@ -7,7 +7,7 @@ log_dir = '.'
 default_debounce = 200
 
 pins = (
-    (23, increase, 300),
-    (16, decrease),
-    (25, reset)
+    (23, 'increase', 300),
+    (16, 'decrease'),
+    (25, 'reset')
 )
