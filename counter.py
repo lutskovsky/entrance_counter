@@ -58,8 +58,8 @@ except (IOError, ValueError):
 finally:
     total = open('total', 'w+', 0)
 
-for pin in enter_pins:
-    GPIO.add_event_detect(pin, GPIO.RISING, callback=enter())
+#for pin in enter_pins:
+#    GPIO.add_event_detect(pin, GPIO.RISING, callback=enter())
 
 
 root=Tk()
