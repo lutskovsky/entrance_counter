@@ -22,6 +22,7 @@ from config import *
 @atexit.register
 def cleanup():
     GPIO.cleanup()
+    total.close()
 
 
 def change_value(*not_used_args):
