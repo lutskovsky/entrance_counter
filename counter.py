@@ -23,6 +23,7 @@ from config import *
 def cleanup():
     GPIO.cleanup()
     total.close()
+    logfile.close()
 
 
 def change_value(*not_used_args):
